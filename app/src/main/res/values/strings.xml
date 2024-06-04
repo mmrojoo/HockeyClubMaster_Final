@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">HockeyClubMaster</string>
+
+    <!--Main activity-->
+    <string name="Btn_Login">Login</string>
+
+    <!--Login activity-->
+    <string name="IniciarSesionTXT">Iniciar Sesión</string>
+    <string name="CorreoLogin">Correo</string>
+    <string name="PassLogin">Contraseña</string>
+    <string name="BtnLogeo">Entrar</string>
+
+    <!--Menu principal-->
+
+    <string name="BienvenidoPrincipal">Bienvenido(a)</string>
+    <string name="NombresPrincipal">--</string>
+    <string name="CorreoPrincipal">--</string>
+    <string name="UidPrincipal">--</string>
+
+    <string name="AgregarNotas">Agregar Convocatorias</string>
+    <string name="ListarNotas">Mis Convocatorias</string>
+    <string name="Archivados">Archivados</string>
+    <string name="Perfil">Perfil</string>
+    <string name="AcercaDe">Acerca de</string>
+    <string name="CerrarSesion">Salir</string>
+
+
+    <!--AGREGAR NOTA-->
+
+    <string name="Uid_Usuario">Uid del Usuario</string>
+    <string name="Correo_usuario">Correo del Usuario</string>
+    <string name="Titulo">Titulo</string>
+    <string name="Fecha_hora_actual">Fecha y hora actual</string>
+    <string name="Descripcion">Descripcion</string>
+    <string name="Btn_Calendario">Calendario</string>
+    <string name="Fecha">00/00/0000</string>
+    <string name="Estado">No finalizado</string>
+
+    <!--MENÚ-->
+    <string name="Agregar_Nota_BD">Agregar</string>
+
+    <!--ITEM NOTA-->
+    <string name="Id_nota_Item">Id Convocatoria</string>
+    <string name="Uid_Usuario_Item">Uid del Usuario</string>
+    <string name="Correo_usuario_Item">Correo del Usuario</string>
+    <string name="Titulo_Item">Titulo</string>
+    <string name="Fecha_hora_registro_Item">Fecha y hora registro</string>
+    <string name="Descripcion_Item">Descripcion</string>
+    <string name="Fecha_Item">00/00/0000</string>
+    <string name="Estado_Item">No finalizado</string>
+
+
+
+
+
+</resources>

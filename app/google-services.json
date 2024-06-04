@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "475671712750",
+    "project_id": "hockey-ad36f",
+    "storage_bucket": "hockey-ad36f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475671712750:android:61aecba6dc2ac08d7e74ff",
+        "android_client_info": {
+          "package_name": "com.example.agenda_online"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVxgEE1bSdFEdDxEiwqKSOrutOu5cZITs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
