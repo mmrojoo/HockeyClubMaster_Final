@@ -20,7 +20,8 @@
             android:exported="false" />
         <activity
             android:name=".ListarNotas.Listar_Notas"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".AgregarNota.Agregar_Nota"
             android:exported="false"

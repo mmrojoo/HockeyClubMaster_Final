@@ -13,7 +13,7 @@ public class ViewHolder_Nota extends RecyclerView.ViewHolder {
 
     View mView;
 
-    private ViewHolder_Nota.ClickListener mClickListener
+    private ViewHolder_Nota.ClickListener mClickListener;
 
     public interface ClickListener{
         void onItemClick(View view, int position);
@@ -31,20 +31,20 @@ public class ViewHolder_Nota extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mClickListener.onItemClick(view, getAdapterPosition());
+                mClickListener.onItemClick(view, getBindingAdapterPosition());
             }
         });
 
         itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                mClickListener.onItemLongClick(view, getAdapterPosition());
+                mClickListener.onItemLongClick(view, getBindingAdapterPosition());
                 return false;
             }
         });
     }
 
-    public void SetearDatos(Context context, String uid_usuario, String correo_usuario
+    public void SetearDatos(Context context,String id_nota, String uid_usuario, String correo_usuario
             , String fecha_hora_registro, String titulo, String descripcion, String fecha_nota
             , String estado){
 
@@ -52,14 +52,27 @@ public class ViewHolder_Nota extends RecyclerView.ViewHolder {
         TextView Id_nota_Item, Uid_Usuario_Item, Correo_usuario_Item, Fecha_hora_registro_Item,
                 Titulo_Item, Descripcion_Item, Fecha_Item, Estado_Item;
 
-
+        //ESTABLECER LA CONEXION CON EL ITEM
         Id_nota_Item = mView.findViewById(R.id.Id_nota_item);
         Uid_Usuario_Item = mView.findViewById(R.id.Uid_Usuario_Item);
         Correo_usuario_Item = mView.findViewById(R.id.Correo_usuario_Item);
         Fecha_hora_registro_Item = mView.findViewById(R.id.Fecha_hora_registro_Item);
-        Titulo_Item = mView.findViewById(R.id.Id_nota_item);
-        Descripcion_Item = mView.findViewById(R.id.Id_nota_item);
-        Fecha_Item = mView.findViewById(R.id.Id_nota_item);
-        Estado_Item = mView.findViewById(R.id.Id_nota_item);
+        Titulo_Item = mView.findViewById(R.id.Titulo_Item);
+        Descripcion_Item = mView.findViewById(R.id.Descripcion_Item);
+        Fecha_Item = mView.findViewById(R.id.Fecha_Item);
+        Estado_Item = mView.findViewById(R.id.Estado_Item);
+
+        //SETEAR LA INFO DENTRO DEL ITEM
+
+        Id_nota_Item.setText(id_nota);
+        Uid_Usuario_Item.setText(uid_usuario);
+        Correo_usuario_Item.setText(correo_usuario);
+        Fecha_hora_registro_Item.setText(fecha_hora_registro);
+        Titulo_Item.setText(titulo);
+        Descripcion_Item.setText(descripcion);
+        Fecha_Item.setText(fecha_nota);
+        Estado_Item.setText(estado);
+
+
     }
 }
