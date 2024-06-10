@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.agenda_online.Objetos.Nota;
 import com.example.agenda_online.R;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.Menu;
@@ -86,7 +87,7 @@ public class Agregar_Nota extends AppCompatActivity {
 
                     }
                 }
-                ,anio, mes, dia);
+                        ,anio, mes, dia);
                 datePickerDialog.show();
             }
         });
@@ -122,6 +123,7 @@ public class Agregar_Nota extends AppCompatActivity {
         Fecha_hora_actual.setText(Fecha_hora_registro);
     }
 
+    @SuppressLint("NotConstructor")
     private void Agregar_Nota(){
         //Obtener los datos
         String uid_usuario = Uid_Usuario.getText().toString();

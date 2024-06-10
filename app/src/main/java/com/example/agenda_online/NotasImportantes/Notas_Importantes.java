@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.agenda_online.Detalle.Detalle_Nota;
@@ -20,6 +22,8 @@ import com.example.agenda_online.R;
 import com.example.agenda_online.ViewHolder.ViewHolder_Nota_Importante;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +35,6 @@ public class Notas_Importantes extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
 
     DatabaseReference Mis_Usuarios;
-    DatabaseReference Notas_Importantes;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
@@ -40,6 +43,8 @@ public class Notas_Importantes extends AppCompatActivity {
     FirebaseRecyclerOptions<Nota> firebaseRecyclerOptions;
 
     LinearLayoutManager linearLayoutManager;
+
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,8 @@ public class Notas_Importantes extends AppCompatActivity {
         user = firebaseAuth.getCurrentUser();
 
         Mis_Usuarios = firebaseDatabase.getReference("Usuarios");
+
+        dialog = new Dialog(com.example.agenda_online.NotasImportantes.Notas_Importantes.this);
 
         ComprobarUsuario();
     }
@@ -101,25 +108,42 @@ public class Notas_Importantes extends AppCompatActivity {
                 viewHolder_nota_importante.setOnClickListener(new ViewHolder_Nota_Importante.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Nota nota = getItem(position);
 
-                        // Enviamos los datos a la siguiente actividad
-                        Intent intent = new Intent(Notas_Importantes.this, Detalle_Nota.class);
-                        intent.putExtra("id_nota", nota.getId_nota());
-                        intent.putExtra("uid_usuario", nota.getUid_usuario());
-                        intent.putExtra("correo_usuario", nota.getCorreo_usuario());
-                        intent.putExtra("fecha_registro", nota.getFecha_hora_actual());
-                        intent.putExtra("titulo", nota.getTitulo());
-                        intent.putExtra("descripcion", nota.getDescripcion());
-                        intent.putExtra("fecha_nota", nota.getFecha_nota());
-                        intent.putExtra("estado", nota.getEstado());
-
-                        startActivity(intent);
                     }
 
                     @Override
                     public void onItemLongClick(View view, int position) {
-                        // Acción cuando se mantiene presionado un elemento
+
+                        String id_nota = getItem(position).getId_nota();
+                        //Declaramos las vistas
+                        Button EliminarNota , EliminarNotaCancelar;
+
+                        //Realizamos la conexión con el diseño
+                        dialog.setContentView(R.layout.cuadro_dialogo_eliminar_nota_importante);
+
+                        //Inicializar las vistas
+                        EliminarNota = dialog.findViewById(R.id.EliminarNota);
+                        EliminarNotaCancelar = dialog.findViewById(R.id.EliminarNotaCancelar);
+
+                        EliminarNota.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //Toast.makeText(Notas_Importantes.this, "Nota eliminada", Toast.LENGTH_SHORT).show();
+
+                                Eliminar_Nota_Impotante(id_nota);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        EliminarNotaCancelar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(Notas_Importantes.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
+
+                        dialog.show();
                     }
                 });
                 return viewHolder_nota_importante;
@@ -127,11 +151,31 @@ public class Notas_Importantes extends AppCompatActivity {
         };
 
         linearLayoutManager = new LinearLayoutManager(Notas_Importantes.this, LinearLayoutManager.VERTICAL, false);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
+
 
         RecyclerViewNotasImportantes.setLayoutManager(linearLayoutManager);
         RecyclerViewNotasImportantes.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    private void Eliminar_Nota_Impotante(String id_nota) {
+        if (user == null) {
+            Toast.makeText(Notas_Importantes.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
+        } else {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
+            reference.child(firebaseAuth.getUid()).child("Mis convocatorias importantes").child(id_nota)
+                    .removeValue()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(Notas_Importantes.this, "La convocatoria ya no es importante", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Notas_Importantes.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
     @Override

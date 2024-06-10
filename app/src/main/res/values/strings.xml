@@ -3,12 +3,22 @@
 
     <!--Main activity-->
     <string name="Btn_Login">Login</string>
+    <string name="Btn_Registro">Registro</string>
 
     <!--Login activity-->
     <string name="IniciarSesionTXT">Iniciar Sesión</string>
     <string name="CorreoLogin">Correo</string>
     <string name="PassLogin">Contraseña</string>
     <string name="BtnLogeo">Entrar</string>
+
+    <!--ACTIVIDAD REGISTRO-->
+    <string name="CrearCuentaTXT">Crear una cuenta</string>
+    <string name="NombreEt">Nombres</string>
+    <string name="CorreoEt">Correo electrónico</string>
+    <string name="ContaseñaEt">Contraseña</string>
+    <string name="ConfirmarContraseñaEt">Confirmar contraseña</string>
+    <string name="RegistrarUsuario">Registrar</string>
+    <string name="TengounacuentaTXT">Tengo una cuenta</string>
 
     <!--Menu principal-->
 
@@ -72,6 +82,11 @@
     <string name="CuentaVerificadaTXT">Cuenta verificada</string>
     <string name="EntendidoVerificado">Entendido</string>
 
+    <!--CUADRO DE DIALOGO ELIMINAR NOTA IMPORTANTE-->
+    <string name="EliminarNotaImportanteTXT">¿Desea eliminar esta convocatoria favorita de la lista?</string>
+    <string name="EliminarNota">Eliminar</string>
+    <string name="EliminarNotaCancelar">Cancelar</string>
+
     <!--ACTUALIZAR NOTA-->
     <string name="Id_nota_A">Id nota</string>
     <string name="Uid_Usuario_A">Uid del Usuario</string>
@@ -109,9 +124,6 @@
     <string name="Fecha_Registro_Detalle_TXT">Fecha de registro: </string>
     <string name="Fecha_Nota_Detalle_TXT">Fecha de la convocatoria: </string>
     <string name="Estado_Detalle_TXT">Estado: </string>
-
-
-
 
 
 </resources>
