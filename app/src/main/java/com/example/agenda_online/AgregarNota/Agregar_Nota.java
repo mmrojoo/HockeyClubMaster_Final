@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.agenda_online.Objetos.Nota;
 import com.example.agenda_online.R;
-import android.annotation.SuppressLint;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.agenda_online.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

@@ -15,21 +15,34 @@
         android:fontFamily="@font/worksans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_fileName="seleccionar.json"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"/>
 
     <Button
         android:id="@+id/CD_Eliminar"
         android:text="@string/CD_Eliminar"
+        app:icon="@drawable/icono_eliminar_cd"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/worksans"
-        android:layout_width="match_parent"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/CD_Actualizar"
+        app:icon="@drawable/icono_actualizar_cd"
+        android:layout_gravity="center"
         android:text="@string/CD_Actualizar"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/worksans"
-        android:layout_width="match_parent"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/Uid_Usuario"
+            android:visibility="gone"
             android:id="@+id/Uid_Usuario"
             android:fontFamily="@font/worksans"
             android:textSize="18sp"/>
@@ -22,13 +23,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/Correo_usuario"
+            android:visibility="gone"
             android:id="@+id/Correo_usuario"
             android:fontFamily="@font/worksans"
             android:textSize="18sp"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/fecha_hora_registro"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/worksans"
+                android:layout_height="wrap_content"
+                android:text="@string/Fecha_hora_actual_TXT"/>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/Fecha_hora_actual"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
             android:id="@+id/Fecha_hora_actual"
             android:fontFamily="@font/worksans"
             android:textSize="18sp"/>

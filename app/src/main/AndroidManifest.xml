@@ -13,20 +13,27 @@
         android:theme="@style/Theme.Agenda_Online"
         tools:targetApi="31">
         <activity
+            android:name=".Detalle.Detalle_Nota"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".ActualizarNota.Actualizar_Nota"
+            android:exported="false" />
+        <activity
             android:name=".Perfil.Perfil_Usuario"
             android:exported="false" />
         <activity
-            android:name=".NotasArchivadas.Notas_Archivadas"
-            android:exported="false" />
+            android:name=".NotasImportantes.Notas_Importantes"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".ListarNotas.Listar_Notas"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat"/>
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".AgregarNota.Agregar_Nota"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat"/>
-
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".MenuPrincipal"
             android:exported="false"
