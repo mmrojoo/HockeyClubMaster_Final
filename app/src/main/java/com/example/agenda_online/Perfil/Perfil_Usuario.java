@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.agenda_online.ActualizarPass.ActualizarPassUsuario;
 import com.example.agenda_online.MenuPrincipal;
 import com.example.agenda_online.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -234,6 +238,21 @@ public class Perfil_Usuario extends AppCompatActivity {
                         Toast.makeText(Perfil_Usuario.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_actualizar_pass, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.Actualizar_pass){
+            startActivity(new Intent(Perfil_Usuario.this, ActualizarPassUsuario.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void ComprobarInicioSesion(){

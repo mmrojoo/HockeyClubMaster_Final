@@ -149,5 +149,14 @@
     <string name="BtnElegirImagenDe">Elegir imagen de perfil</string>
     <string name="BtnActualizarImagen">Actualizar imagen</string>
 
+    <!--CAMBIAR PASSWORD-->
+    <string name="ActualPassTXT">Contaseña actual:</string>
+    <string name="ActualPass"> -- </string>
+    <string name="EtActualPass">Contraseña actual</string>
+    <string name="EtNuevoPass">Nueva contraseña</string>
+    <string name="EtRNuevoPass">Nueva contraseña</string>
+    <string name="BtnActualizarPass">Actualizar</string>
+
+
 
 </resources>
