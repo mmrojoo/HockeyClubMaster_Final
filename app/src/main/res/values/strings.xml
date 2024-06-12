@@ -31,7 +31,7 @@
     <string name="AgregarNotas">Agregar Convocatorias</string>
     <string name="ListarNotas">Mis Convocatorias</string>
     <string name="Importantes">Importantes</string>
-    <string name="Perfil">Perfil</string>
+    <string name="Contactos">Equipo</string>
     <string name="AcercaDe">Acerca de</string>
     <string name="CerrarSesion">Salir</string>
 
@@ -51,6 +51,8 @@
     <!--MENÚ-->
     <string name="Agregar_Nota_BD">Agregar</string>
     <string name="Actualizar_Nota_BD">Actualizar</string>
+    <string name="Perfil_usuario">Perfil del usuario</string>
+    <string name="Actualizar_pass">Actualizar pass</string>
 
     <!--ITEM NOTA-->
     <string name="Id_nota_Item">Id Convocatoria</string>
@@ -81,6 +83,11 @@
     <!--CUADRO DE DIALOGO CUENTA VERIFICADA-->
     <string name="CuentaVerificadaTXT">Cuenta verificada</string>
     <string name="EntendidoVerificado">Entendido</string>
+
+    <!--CUADRO DE DIALOGO CUENTA VERIFICADA-->
+    <string name="ElegirImagenTXT">Elegir imagen de:</string>
+    <string name="Btn_Elegir_Galeria">Galería</string>
+    <string name="Btn_Elegir_Camara">Cámara</string>
 
     <!--CUADRO DE DIALOGO ELIMINAR NOTA IMPORTANTE-->
     <string name="EliminarNotaImportanteTXT">¿Desea eliminar esta convocatoria favorita de la lista?</string>
@@ -124,6 +131,23 @@
     <string name="Fecha_Registro_Detalle_TXT">Fecha de registro: </string>
     <string name="Fecha_Nota_Detalle_TXT">Fecha de la convocatoria: </string>
     <string name="Estado_Detalle_TXT">Estado: </string>
+
+    <!--PERFIL DEL USUARIO-->
+    <string name="Uid_Perfil">Uid</string>
+    <string name="Nombres_Perfil">Mi nombre</string>
+    <string name="Apellidos_Perfil">Mis apellidos</string>
+    <string name="Correo_Perfil">Correo</string>
+    <string name="Edad_Perfil">Edad</string>
+    <string name="Telefono_Perfil">Telefono</string>
+    <string name="Domicilio_Perfil">Domicilio</string>
+    <string name="Universidad_Perfil">Universidad</string>
+    <string name="Profesion_Perfil">Profesion</string>
+    <string name="Fecha_Nacimiento_Perfil">Fecha de nac.</string>
+    <string name="Guardar_Datos">Guardar datos</string>
+
+    <!--PERFIL DEL USUARIO [IMAGEN DE PERFIL]-->
+    <string name="BtnElegirImagenDe">Elegir imagen de perfil</string>
+    <string name="BtnActualizarImagen">Actualizar imagen</string>
 
 
 </resources>

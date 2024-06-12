@@ -13,12 +13,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.agenda_online.AgregarNota.Agregar_Nota;
 import com.example.agenda_online.ListarNotas.Listar_Notas;
 import com.example.agenda_online.NotasImportantes.Notas_Importantes;
@@ -35,9 +40,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MenuPrincipal extends AppCompatActivity {
 
-    Button CerrarSesion,ListarNotas ,AgregarNotas, Importantes, Perfil, AcercaDe ;
+    Button CerrarSesion,ListarNotas ,AgregarNotas, Importantes, Contactos, AcercaDe ;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
+    ImageView imagen_perfil;
 
     TextView NombresPrincipal, CorreoPrincipal, UidPrincipal;
     Button EstadoCuentaPrincipal;
@@ -64,6 +70,9 @@ public class MenuPrincipal extends AppCompatActivity {
         EstadoCuentaPrincipal = findViewById(R.id.EstadoCuentaPrincipal);
         progressBarDatos = findViewById(R.id.progressBarDatos);
 
+        imagen_perfil = findViewById(R.id.imagen_perfil );
+
+
         dialog_cuenta_verificada = new Dialog(this);
 
         progressDialog = new ProgressDialog(this);
@@ -80,7 +89,7 @@ public class MenuPrincipal extends AppCompatActivity {
         AgregarNotas = findViewById(R.id.AgregarNotas);
         ListarNotas = findViewById(R.id.ListarNotas);
         Importantes = findViewById(R.id.Importantes);
-        Perfil = findViewById(R.id.Perfil);
+        Contactos = findViewById(R.id.Contactos);
         AcercaDe = findViewById(R.id.AcercaDe);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -128,11 +137,11 @@ public class MenuPrincipal extends AppCompatActivity {
                 Toast.makeText(MenuPrincipal.this, "Convocatorias Guardadas", Toast.LENGTH_SHORT).show();
             }
         });
-        Perfil.setOnClickListener(new View.OnClickListener() {
+        Contactos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MenuPrincipal.this, Perfil_Usuario.class));
-                Toast.makeText(MenuPrincipal.this, "Perfil Usuario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuPrincipal.this, "Contactos", Toast.LENGTH_SHORT).show();
             }
         });
         AcercaDe.setOnClickListener(new View.OnClickListener() {
@@ -239,39 +248,43 @@ public class MenuPrincipal extends AppCompatActivity {
             finish();
         }
     }
-    private void CargaDeDatos(){
-
+    private void CargaDeDatos() {
         VerificarEstadoDeCuenta();
         Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //Si el usuario existe
-                if (snapshot.exists()){
-                    //el progressbar se oculta
+                // Si el usuario existe
+                if (snapshot.exists()) {
+                    // Ocultar el progressbar
                     progressBarDatos.setVisibility(View.GONE);
-                    //Los textview se muestran
-                    //UidPrincipal.setVisibility(View.VISIBLE);
-                    //NombresPrincipal.setVisibility(View.VISIBLE);
-                    //CorreoPrincipal.setVisibility(View.VISIBLE);
 
+                    // Mostrar los layouts
                     Linear_Nombres.setVisibility(View.VISIBLE);
                     Linear_Correo.setVisibility(View.VISIBLE);
                     Linear_Verificacion.setVisibility(View.VISIBLE);
-                    //Obtener los datos
-                    String uid = "" + snapshot.child("uid").getValue();
-                    String nombres = ""+snapshot.child("nombres").getValue();
-                    String correo = ""+snapshot.child("correo").getValue();
 
-                    //Saltear los datos en los respectivos textview
+                    // Obtener los datos
+                    String uid = "" + snapshot.child("uid").getValue();
+                    String nombres = "" + snapshot.child("nombres").getValue();
+                    String correo = "" + snapshot.child("correo").getValue();
+                    String imagenPerfilUrl = "" + snapshot.child("imagen_perfil").getValue(); // Obtener la URL de la imagen
+
+                    // Setear los datos en los respectivos textview
                     UidPrincipal.setText(uid);
                     NombresPrincipal.setText(nombres);
                     CorreoPrincipal.setText(correo);
 
-                    //Habilitar los botones del menú
+                    // Cargar la imagen de perfil usando Glide
+                    Glide.with(MenuPrincipal.this)
+                            .load(imagenPerfilUrl)
+                            .placeholder(R.drawable.imagen_perfil) // Placeholder image
+                            .into(imagen_perfil);
+
+                    // Habilitar los botones del menú
                     AgregarNotas.setEnabled(true);
                     ListarNotas.setEnabled(true);
                     Importantes.setEnabled(true);
-                    Perfil.setEnabled(true);
+                    Contactos.setEnabled(true);
                     AcercaDe.setEnabled(true);
                     CerrarSesion.setEnabled(true);
                 }
@@ -279,9 +292,25 @@ public class MenuPrincipal extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Manejar el error
             }
         });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.Perfil_usuario){
+            startActivity(new Intent(MenuPrincipal.this, Perfil_Usuario.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void SalirAplicacion() {

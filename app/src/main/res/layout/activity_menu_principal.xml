@@ -27,6 +27,7 @@
                 android:orientation="horizontal"
                 android:weightSum="4">
                 <ImageView
+                    android:id="@+id/imagen_perfil"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_weight="1"
@@ -261,10 +262,10 @@
                     <Button
                         android:enabled="false"
 
-                        android:id="@+id/Perfil"
+                        android:id="@+id/Contactos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Perfil"
+                        android:text="@string/Contactos"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/worksans"/>
 
