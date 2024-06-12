@@ -53,6 +53,7 @@
     <string name="Actualizar_Nota_BD">Actualizar</string>
     <string name="Perfil_usuario">Perfil del usuario</string>
     <string name="Actualizar_pass">Actualizar pass</string>
+    <string name="Agregar_contacto">Agregar contacto</string>
 
     <!--ITEM NOTA-->
     <string name="Id_nota_Item">Id Convocatoria</string>
@@ -63,6 +64,17 @@
     <string name="Descripcion_Item">Descripcion</string>
     <string name="Fecha_Item">00/00/0000</string>
     <string name="Estado_Item">No finalizado</string>
+
+    <!--ITEM CONTACTO-->
+    <string name="Id_c_Item"> Id contacto</string>
+    <string name="Uid_c_Item"> Uid usuario</string>
+    <string name="nombres_c_Item">Nombres</string>
+    <string name="apellidos_c_Item">Apellidos</string>
+    <string name="correo_c_Item">Correo</string>
+    <string name="telefono_c_Item">Teléfono</string>
+    <string name="edad_c_Item">Edad</string>
+    <string name="direccion_c_Item">Dirección</string>
+
 
     <!--ITEM NOTA IMPORTANTE-->
     <string name="Id_nota_Item_I">Id Convocatoria</string>
@@ -89,10 +101,19 @@
     <string name="Btn_Elegir_Galeria">Galería</string>
     <string name="Btn_Elegir_Camara">Cámara</string>
 
+    <!--CUADRO DE DIALOGO VALIDAR REGISTRO DE JUGADOR DE EQUIPO (CONTACTO)-->
+    <string name="ValidarTXT">Por favor complete al menos un campo nombre del contacto </string>
+    <string name="Btn_Validar_Registro_C">Entendido</string>
+
     <!--CUADRO DE DIALOGO ELIMINAR NOTA IMPORTANTE-->
     <string name="EliminarNotaImportanteTXT">¿Desea eliminar esta convocatoria favorita de la lista?</string>
     <string name="EliminarNota">Eliminar</string>
     <string name="EliminarNotaCancelar">Cancelar</string>
+
+    <!--CUADRO DE DIALOGO OPCIONES PARA EL CONTACTO-->
+    <string name="ElegirOpcionContactoTXT">Seleccione una opción</string>
+    <string name="Btn_Eliminar_C">Eliminar</string>
+    <string name="Btn_Actualizar_C">Actualizar</string>
 
     <!--ACTUALIZAR NOTA-->
     <string name="Id_nota_A">Id nota</string>
@@ -157,6 +178,24 @@
     <string name="EtRNuevoPass">Nueva contraseña</string>
     <string name="BtnActualizarPass">Actualizar</string>
 
+    <!--AGREGAR CONTACTO-->
+    <string name="Uid_Usuario_C">Mi uid</string>
+    <string name="Nombres_C">Nombres contacto</string>
+    <string name="Apellidos_C">Apellidos contacto</string>
+    <string name="Correo_C">Correo electrónico</string>
+    <string name="Telefono_C">Teléfono</string>
+    <string name="Edad_C">Edad</string>
+    <string name="Direccion_C">Dirección</string>
+    <string name="Btn_Guardar_Contacto">Guardar contacto</string>
 
-
+    <!--DETALLE CONTACTO-->
+    <string name="DetalleContactoTXT">Detalle del contacto</string>
+    <string name="Id_C_D"> -- </string>
+    <string name="Uid_Usuario_D"> -- </string>
+    <string name="Nombre_C_D"> -- </string>
+    <string name="Apellidos_C_D"> -- </string>
+    <string name="Correo_C_D"> -- </string>
+    <string name="Telefono_C_D"> -- </string>
+    <string name="Edad_C_D"> -- </string>
+    <string name="Direccion_C_D"> -- </string>
 </resources>
