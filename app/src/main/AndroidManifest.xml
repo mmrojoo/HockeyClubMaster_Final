@@ -53,11 +53,11 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".Detalle.Detalle_Nota"
+            android:name=".Notas.Detalle_Nota"
             android:exported="false"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".ActualizarNota.Actualizar_Nota"
+            android:name=".Notas.Actualizar_Nota"
             android:exported="false"
             android:theme="@style/Theme.AppCompat" />
         <activity
@@ -65,15 +65,15 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".NotasImportantes.Notas_Importantes"
+            android:name=".Notas.Notas_Importantes"
             android:exported="false"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".ListarNotas.Listar_Notas"
+            android:name=".Notas.Listar_Notas"
             android:exported="false"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".AgregarNota.Agregar_Nota"
+            android:name=".Notas.Agregar_Nota"
             android:exported="false"
             android:theme="@style/Theme.AppCompat" />
         <activity

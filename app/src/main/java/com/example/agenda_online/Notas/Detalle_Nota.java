@@ -1,4 +1,4 @@
-package com.example.agenda_online.Detalle;
+package com.example.agenda_online.Notas;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;

@@ -1,4 +1,4 @@
-package com.example.agenda_online.ListarNotas;
+package com.example.agenda_online.Notas;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.agenda_online.ActualizarNota.Actualizar_Nota;
-import com.example.agenda_online.Detalle.Detalle_Nota;
 import com.example.agenda_online.Objetos.Nota;
 import com.example.agenda_online.R;
 import com.example.agenda_online.ViewHolder.ViewHolder_Nota;
@@ -32,7 +30,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 
 public class Listar_Notas extends AppCompatActivity {
 

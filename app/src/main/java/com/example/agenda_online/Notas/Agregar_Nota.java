@@ -1,4 +1,4 @@
-package com.example.agenda_online.AgregarNota;
+package com.example.agenda_online.Notas;
 
 import static android.widget.Toast.makeText;
 
@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -36,6 +38,9 @@ public class Agregar_Nota extends AppCompatActivity {
     Button Btn_Calendario;
 
     int dia, mes, anio;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
 
     DatabaseReference BD_Firebase;
 
@@ -105,7 +110,10 @@ public class Agregar_Nota extends AppCompatActivity {
         Descripcion = findViewById(R.id.Descripcion);
         Btn_Calendario = findViewById(R.id.Btn_Calendario);
 
-        BD_Firebase = FirebaseDatabase.getInstance().getReference();
+        BD_Firebase = FirebaseDatabase.getInstance().getReference("Usuarios");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
     }
 
     private void ObtenerDatos(){
@@ -133,12 +141,13 @@ public class Agregar_Nota extends AppCompatActivity {
         String descripcion = Descripcion.getText().toString();
         String fecha = Fecha.getText().toString();
         String estado = Estado.getText().toString();
+        String id_nota = BD_Firebase.push().getKey();
 
         //Validar datos
         if(!uid_usuario.equals("") && !correo_usuario.equals("") &&!fecha_hora_actual.equals("")
                 &&!titulo.equals("") &&!descripcion.equals("") &&!fecha.equals("")
                 &&!estado.equals("")){
-            Nota nota = new Nota(correo_usuario + "/" +fecha_hora_actual,
+            Nota nota = new Nota(id_nota,
                     uid_usuario,
                     correo_usuario,
                     fecha_hora_actual,
@@ -150,7 +159,7 @@ public class Agregar_Nota extends AppCompatActivity {
             //Establecer el nombre de la BD
             String Nombre_BD = "convocatorias";
 
-            BD_Firebase.child(Nombre_BD).child(Nota_usuario).setValue(nota);
+            BD_Firebase.child(user.getUid()).child(Nombre_BD).child(id_nota).setValue(nota);
 
             makeText(this, "Se ha agregado con exito la nota", Toast.LENGTH_SHORT).show();
             onBackPressed();

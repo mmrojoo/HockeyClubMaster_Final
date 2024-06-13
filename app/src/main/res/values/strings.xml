@@ -212,4 +212,10 @@
     <string name="Edad_C_A"> -- </string>
     <string name="Direccion_C_A"> -- </string>
     <string name="Btn_Actualizar_C_A">Actualizar</string>
+
+    <!--INFORMACIÓN DE APLICACIÓN-->
+    <string name="Desarrollador">Desarrollado por: Mario Martín y David Rubio</string>
+    <string name="CorreoSoporte">Soporte: sophcm@gmail.com</string>
+    <string name="Version">Versión: 1.0</string>
+    <string name="EntendidoInfo">Entendido</string>
 </resources>

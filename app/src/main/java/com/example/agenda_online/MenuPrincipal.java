@@ -24,10 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.agenda_online.AgregarNota.Agregar_Nota;
+import com.example.agenda_online.Notas.Agregar_Nota;
 import com.example.agenda_online.Contactos.Listar_Contactos;
-import com.example.agenda_online.ListarNotas.Listar_Notas;
-import com.example.agenda_online.NotasImportantes.Notas_Importantes;
+import com.example.agenda_online.Notas.Listar_Notas;
+import com.example.agenda_online.Notas.Notas_Importantes;
 import com.example.agenda_online.Perfil.Perfil_Usuario;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,7 +53,7 @@ public class MenuPrincipal extends AppCompatActivity {
     LinearLayoutCompat Linear_Nombres, Linear_Correo, Linear_Verificacion;
 
     DatabaseReference Usuarios;
-    Dialog dialog_cuenta_verificada;
+    Dialog dialog_cuenta_verificada, dialog_informacion;
 
 
     @SuppressLint("MissingInflatedId")
@@ -75,6 +75,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
 
         dialog_cuenta_verificada = new Dialog(this);
+        dialog_informacion = new Dialog(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Espere por favor...");
@@ -151,7 +152,7 @@ public class MenuPrincipal extends AppCompatActivity {
         AcercaDe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MenuPrincipal.this, "Acerca De", Toast.LENGTH_SHORT).show();
+                Informacion();
             }
         });
 
@@ -200,6 +201,23 @@ public class MenuPrincipal extends AppCompatActivity {
         });
         dialog_cuenta_verificada.show();
         dialog_cuenta_verificada.setCanceledOnTouchOutside(false);
+    }
+    private void Informacion(){
+        Button EntendidoInfo;
+
+        dialog_informacion.setContentView(R.layout.cuadro_dialogo_informacion);
+
+        EntendidoInfo = dialog_informacion.findViewById(R.id.EntendidoInfo);
+
+        EntendidoInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_informacion.dismiss();
+            }
+        });
+
+        dialog_informacion.show();
+        dialog_informacion.setCanceledOnTouchOutside(false);
     }
 
     private void EnviarCorreoVerificacion() {

@@ -1,4 +1,4 @@
-package com.example.agenda_online.NotasImportantes;
+package com.example.agenda_online.Notas;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.agenda_online.Detalle.Detalle_Nota;
 import com.example.agenda_online.Objetos.Nota;
 import com.example.agenda_online.R;
 import com.example.agenda_online.ViewHolder.ViewHolder_Nota_Importante;
@@ -64,7 +62,7 @@ public class Notas_Importantes extends AppCompatActivity {
 
         Mis_Usuarios = firebaseDatabase.getReference("Usuarios");
 
-        dialog = new Dialog(com.example.agenda_online.NotasImportantes.Notas_Importantes.this);
+        dialog = new Dialog(Notas_Importantes.this);
 
         ComprobarUsuario();
     }
