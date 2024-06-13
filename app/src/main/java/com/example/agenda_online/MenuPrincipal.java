@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -151,9 +152,44 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     private void showInformationDialog() {
+        ImageView Ir_facebook, Ir_instagram, Ir_youtube, Ir_twitter;
         dialog_informacion.setContentView(R.layout.cuadro_dialogo_informacion);
         Button EntendidoInfo = dialog_informacion.findViewById(R.id.EntendidoInfo);
+
+        Ir_facebook = dialog_informacion.findViewById(R.id.Ir_facebook);
+        Ir_instagram = dialog_informacion.findViewById(R.id.Ir_instagram);
+        Ir_youtube = dialog_informacion.findViewById(R.id.Ir_youtube);
+        Ir_twitter = dialog_informacion.findViewById(R.id.Ir_twitter);
+
         EntendidoInfo.setOnClickListener(v -> dialog_informacion.dismiss());
+        Ir_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ir_p_facebook = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/chpaluche/?locale=es_ES"));
+                startActivity(ir_p_facebook);
+            }
+        });
+        Ir_instagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ir_p_instagram = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/chpaluche/"));
+                startActivity(ir_p_instagram);
+            }
+        });
+        Ir_twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ir_p_twitter = new Intent(Intent.ACTION_VIEW, Uri.parse("https://x.com/chp_aluche?lang=es"));
+                startActivity(ir_p_twitter);
+            }
+        });
+        Ir_youtube.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ir_p_facebook = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/@hockeypatinaluche"));
+                startActivity(ir_p_facebook);
+            }
+        });
         dialog_informacion.show();
         dialog_informacion.setCanceledOnTouchOutside(false);
     }

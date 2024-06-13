@@ -46,6 +46,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/Ir_facebook"
+            android:src="@drawable/facebook"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <ImageView
+            android:id="@+id/Ir_instagram"
+            android:src="@drawable/instagram"
+            android:layout_marginStart="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <ImageView
+            android:id="@+id/Ir_youtube"
+            android:src="@drawable/youtube"
+            android:layout_marginStart="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <ImageView
+            android:id="@+id/Ir_twitter"
+            android:src="@drawable/twitter"
+            android:layout_marginStart="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
     <Button
         android:id="@+id/EntendidoInfo"
         android:text="@string/EntendidoInfo"

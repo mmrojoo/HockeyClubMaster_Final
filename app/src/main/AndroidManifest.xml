@@ -23,7 +23,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_aluche_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Agenda_Online"
+        android:theme="@style/Theme.AgendaOnline"
         tools:targetApi="31">
         <activity
             android:name=".Configuracion.Configuracion"
