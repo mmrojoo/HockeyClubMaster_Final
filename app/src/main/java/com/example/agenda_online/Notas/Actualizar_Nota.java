@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agenda_online.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +41,9 @@ public class Actualizar_Nota extends AppCompatActivity implements AdapterView.On
     String id_nota_R, uid_usuario_R, correo_usuario_R, fecha_registro_R, titulo_R, descripcion_R, fecha_R, estado_R;
     ImageView Tarea_Finalizada, Tarea_No_Finalizada;
     Spinner Spinner_estado;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,9 @@ public class Actualizar_Nota extends AppCompatActivity implements AdapterView.On
 
         Spinner_estado = findViewById(R.id.Spinner_Estado);
         Estado_nuevo = findViewById(R.id.Estado_nuevo);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
 
         // Configura el botón del calendario
         Btn_Calendario_A.setOnClickListener(new View.OnClickListener() {
@@ -150,25 +159,30 @@ public class Actualizar_Nota extends AppCompatActivity implements AdapterView.On
         String estadoActualizar = Estado_nuevo.getText().toString();
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference("convocatorias");
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Usuarios");
         //Consulta
-        Query query = databaseReference.orderByChild("id_nota").equalTo(id_nota_R);
+        Query query = databaseReference.child(user.getUid()).child("convocatorias").orderByChild("id_nota").equalTo(id_nota_R);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()){
-                    ds.getRef().child("titulo").setValue(tituloActualizar);
-                    ds.getRef().child("descripcion").setValue(descripcionActualizar);
-                    ds.getRef().child("fecha_nota").setValue(fechaActualizar);
-                    ds.getRef().child("estado").setValue(estadoActualizar);
+                if (snapshot.exists()) { // Check if snapshot exists
+                    for (DataSnapshot ds : snapshot.getChildren()){
+                        ds.getRef().child("titulo").setValue(tituloActualizar);
+                        ds.getRef().child("descripcion").setValue(descripcionActualizar);
+                        ds.getRef().child("fecha_nota").setValue(fechaActualizar);
+                        ds.getRef().child("estado").setValue(estadoActualizar);
+                    }
+                    Toast.makeText(Actualizar_Nota.this, "Nota actualizada con éxito", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                } else {
+                    Toast.makeText(Actualizar_Nota.this, "No se encontró la nota para actualizar", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(Actualizar_Nota.this, "Nota actualizada con éxito", Toast.LENGTH_SHORT).show();
-                onBackPressed();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("FirebaseError", "Error al actualizar la nota", error.toException());
+                Toast.makeText(Actualizar_Nota.this, "Error al actualizar la nota", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -200,17 +214,24 @@ public class Actualizar_Nota extends AppCompatActivity implements AdapterView.On
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Si necesitas agregar lógica adicional al presionar el botón atrás, puedes hacerlo aquí
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed(); // Manejo de la navegación hacia atrás desde la barra de acción
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.Actualizar_Nota_BD) {
-            ActualizarNotaBD();
-            Toast.makeText(this, "Nota actualizada", Toast.LENGTH_SHORT).show();
+            ActualizarNotaBD(); // Lógica para actualizar la nota cuando se selecciona el ícono de acción en la barra de acción
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return super.onSupportNavigateUp();
-    }
+
 }

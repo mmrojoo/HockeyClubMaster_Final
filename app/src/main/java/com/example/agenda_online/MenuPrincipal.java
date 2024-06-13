@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.agenda_online.Configuracion.Configuracion;
 import com.example.agenda_online.Notas.Agregar_Nota;
 import com.example.agenda_online.Contactos.Listar_Contactos;
 import com.example.agenda_online.Notas.Listar_Notas;
@@ -41,20 +42,17 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MenuPrincipal extends AppCompatActivity {
 
-    Button CerrarSesion,ListarNotas ,AgregarNotas, Importantes, Contactos, AcercaDe ;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser user;
-    ImageView imagen_perfil;
-
-    TextView NombresPrincipal, CorreoPrincipal, UidPrincipal;
-    Button EstadoCuentaPrincipal;
-    ProgressBar progressBarDatos;
-    ProgressDialog progressDialog;
-    LinearLayoutCompat Linear_Nombres, Linear_Correo, Linear_Verificacion;
-
-    DatabaseReference Usuarios;
-    Dialog dialog_cuenta_verificada, dialog_informacion;
-
+    private Button CerrarSesion, ListarNotas, AgregarNotas, Importantes, Contactos, AcercaDe;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
+    private ImageView imagen_perfil;
+    private TextView NombresPrincipal, CorreoPrincipal, UidPrincipal;
+    private Button EstadoCuentaPrincipal;
+    private ProgressBar progressBarDatos;
+    private ProgressDialog progressDialog;
+    private LinearLayoutCompat Linear_Nombres, Linear_Correo, Linear_Verificacion;
+    private DatabaseReference Usuarios;
+    private Dialog dialog_cuenta_verificada, dialog_informacion;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -63,16 +61,33 @@ public class MenuPrincipal extends AppCompatActivity {
         setContentView(R.layout.activity_menu_principal);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("HockeyClubMaster");
+        if (actionBar != null) {
+            actionBar.setTitle("HockeyClubMaster");
+        }
 
+        initializeUI();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+
+        EstadoCuentaPrincipal.setOnClickListener(v -> handleAccountVerification());
+
+        AgregarNotas.setOnClickListener(v -> navigateToAddNoteActivity());
+        ListarNotas.setOnClickListener(v -> navigateToListNotesActivity());
+        Importantes.setOnClickListener(v -> navigateToImportantNotesActivity());
+        Contactos.setOnClickListener(v -> navigateToListContactsActivity());
+        AcercaDe.setOnClickListener(v -> showInformationDialog());
+
+        CerrarSesion.setOnClickListener(v -> logout());
+    }
+
+    private void initializeUI() {
         UidPrincipal = findViewById(R.id.UidPrincipal);
         NombresPrincipal = findViewById(R.id.NombrePrincipal);
         CorreoPrincipal = findViewById(R.id.CorreoPrincipal);
         EstadoCuentaPrincipal = findViewById(R.id.EstadoCuentaPrincipal);
         progressBarDatos = findViewById(R.id.progressBarDatos);
-
-        imagen_perfil = findViewById(R.id.imagen_perfil );
-
+        imagen_perfil = findViewById(R.id.imagen_perfil);
 
         dialog_cuenta_verificada = new Dialog(this);
         dialog_informacion = new Dialog(this);
@@ -93,232 +108,159 @@ public class MenuPrincipal extends AppCompatActivity {
         Importantes = findViewById(R.id.Importantes);
         Contactos = findViewById(R.id.Contactos);
         AcercaDe = findViewById(R.id.AcercaDe);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
-
-        EstadoCuentaPrincipal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (user.isEmailVerified()){
-                    //Si la cuenta esta verificada
-                    //Toast.makeText(MenuPrincipal.this, "Cuenta ya verificada", Toast.LENGTH_SHORT).show();
-                    AnimacionCuentaVErificada();
-                }else {
-                    //Si la cuenta no esta verificada
-                    VerificarCuentaCorreo();
-                }
-            }
-        });
-
-        AgregarNotas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Obtenemos la informacion de los textview
-                String uid_usuario = UidPrincipal.getText().toString();
-                String correo_usuario = CorreoPrincipal.getText().toString();
-
-                //Pasamos datos a la siguiente actividad
-                Intent intent = new Intent(MenuPrincipal.this, Agregar_Nota.class);
-                intent.putExtra("Uid", uid_usuario);
-                intent.putExtra("Correo", correo_usuario);
-                startActivity(intent);
-            }
-        });
-        ListarNotas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MenuPrincipal.this, Listar_Notas.class));
-                Toast.makeText(MenuPrincipal.this, "Listar Convocatorias", Toast.LENGTH_SHORT).show();
-            }
-        });
-        Importantes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MenuPrincipal.this, Notas_Importantes.class));
-                Toast.makeText(MenuPrincipal.this, "Convocatorias Guardadas", Toast.LENGTH_SHORT).show();
-            }
-        });
-        Contactos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String uid_usuario = UidPrincipal.getText().toString();
-                Intent intent =  new Intent(MenuPrincipal.this, Listar_Contactos.class);
-                intent.putExtra("Uid", uid_usuario);
-                startActivity(intent);
-            }
-
-        });
-        AcercaDe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Informacion();
-            }
-        });
-
-
-
-        CerrarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SalirAplicacion();
-            }
-        });
-
-
     }
 
-    private void VerificarCuentaCorreo() {
+    private void handleAccountVerification() {
+        if (user.isEmailVerified()) {
+            showAccountVerifiedAnimation();
+        } else {
+            promptEmailVerification();
+        }
+    }
+
+    private void promptEmailVerification() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("verificar cuenta")
-                .setMessage("¿Estas seguro(a) que quieres verificar su cuenta a través de su correo?"
-                + user.getEmail())
-                .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EnviarCorreoVerificacion();
-                    }
-                })
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MenuPrincipal.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
-                    }
-                }).show();
+        builder.setTitle("Verificar cuenta")
+                .setMessage("¿Estas seguro(a) que quieres verificar su cuenta a través de su correo " + user.getEmail() + "?")
+                .setPositiveButton("Enviar", (dialog, which) -> sendVerificationEmail())
+                .setNegativeButton("Cancelar", (dialog, which) -> Toast.makeText(MenuPrincipal.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show())
+                .show();
     }
-    private void AnimacionCuentaVErificada(){
-        Button EntendidoVerificado;
 
+    private void sendVerificationEmail() {
+        progressDialog.setMessage("Enviando instrucciones de verificación a su correo electrónico " + user.getEmail());
+        progressDialog.show();
+
+        user.sendEmailVerification()
+                .addOnSuccessListener(unused -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(MenuPrincipal.this, "Revise su correo " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(MenuPrincipal.this, "Fallo debido a: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void showAccountVerifiedAnimation() {
         dialog_cuenta_verificada.setContentView(R.layout.dialogo_cuenta_verificada);
-
-        EntendidoVerificado = dialog_cuenta_verificada.findViewById(R.id.EntendidoVerificado);
-
-        EntendidoVerificado.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog_cuenta_verificada.dismiss();
-            }
-        });
+        Button EntendidoVerificado = dialog_cuenta_verificada.findViewById(R.id.EntendidoVerificado);
+        EntendidoVerificado.setOnClickListener(v -> dialog_cuenta_verificada.dismiss());
         dialog_cuenta_verificada.show();
         dialog_cuenta_verificada.setCanceledOnTouchOutside(false);
     }
-    private void Informacion(){
-        Button EntendidoInfo;
 
+    private void showInformationDialog() {
         dialog_informacion.setContentView(R.layout.cuadro_dialogo_informacion);
-
-        EntendidoInfo = dialog_informacion.findViewById(R.id.EntendidoInfo);
-
-        EntendidoInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog_informacion.dismiss();
-            }
-        });
-
+        Button EntendidoInfo = dialog_informacion.findViewById(R.id.EntendidoInfo);
+        EntendidoInfo.setOnClickListener(v -> dialog_informacion.dismiss());
         dialog_informacion.show();
         dialog_informacion.setCanceledOnTouchOutside(false);
     }
 
-    private void EnviarCorreoVerificacion() {
-        progressDialog.setMessage("Enviando instrucciones dde verificacion a su correo electronico" + user.getEmail());
-        progressDialog.show();
-        
-        user.sendEmailVerification()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        //Envio correcto
-                        progressDialog.dismiss();
-                        Toast.makeText(MenuPrincipal.this, "Revise su correo " +user.getEmail(), Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //Falla el envio
-                        Toast.makeText(MenuPrincipal.this, "Fallo debido a: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+    private void navigateToAddNoteActivity() {
+        Intent intent = new Intent(MenuPrincipal.this, Agregar_Nota.class);
+        intent.putExtra("Uid", UidPrincipal.getText().toString());
+        intent.putExtra("Correo", CorreoPrincipal.getText().toString());
+        startActivity(intent);
     }
-    private void VerificarEstadoDeCuenta(){
+
+    private void navigateToListNotesActivity() {
+        startActivity(new Intent(MenuPrincipal.this, Listar_Notas.class));
+        Toast.makeText(MenuPrincipal.this, "Listar Convocatorias", Toast.LENGTH_SHORT).show();
+    }
+
+    private void navigateToImportantNotesActivity() {
+        startActivity(new Intent(MenuPrincipal.this, Notas_Importantes.class));
+        Toast.makeText(MenuPrincipal.this, "Convocatorias Guardadas", Toast.LENGTH_SHORT).show();
+    }
+
+    private void navigateToListContactsActivity() {
+        Intent intent = new Intent(MenuPrincipal.this, Listar_Contactos.class);
+        intent.putExtra("Uid", UidPrincipal.getText().toString());
+        startActivity(intent);
+    }
+
+    private void logout() {
+        firebaseAuth.signOut();
+        startActivity(new Intent(MenuPrincipal.this, MainActivity.class));
+        Toast.makeText(this, "Cerraste sesión exitosamente", Toast.LENGTH_SHORT).show();
+    }
+
+    private void checkAccountStatus() {
         String Verificado = "Verificado";
         String No_Verificado = "No verificado";
-        if (user.isEmailVerified()){
+        if (user.isEmailVerified()) {
             EstadoCuentaPrincipal.setText(Verificado);
             EstadoCuentaPrincipal.setBackgroundColor(Color.rgb(0, 0, 255));
-        }else {
+        } else {
             EstadoCuentaPrincipal.setText(No_Verificado);
             EstadoCuentaPrincipal.setBackgroundColor(Color.rgb(231, 76, 60));
-
         }
     }
 
     @Override
     protected void onStart() {
-        ComprobarInicioSesion();
         super.onStart();
+        verifyUserLogin();
     }
 
-    private void ComprobarInicioSesion(){
+    private void verifyUserLogin() {
         if (user != null) {
-            //el usuario ha iniciado sesion
-            CargaDeDatos();
+            loadUserData();
         } else {
-            //Lo dirige al mainActivity
             startActivity(new Intent(MenuPrincipal.this, MainActivity.class));
             finish();
         }
     }
-    private void CargaDeDatos() {
-        VerificarEstadoDeCuenta();
+
+    private void loadUserData() {
+        checkAccountStatus();
         Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // Si el usuario existe
-                if (snapshot.exists()) {
-                    // Ocultar el progressbar
+                if (snapshot.exists() && !isFinishing() && !isDestroyed()) { // Check if Activity is not finishing or destroyed
                     progressBarDatos.setVisibility(View.GONE);
 
-                    // Mostrar los layouts
                     Linear_Nombres.setVisibility(View.VISIBLE);
                     Linear_Correo.setVisibility(View.VISIBLE);
                     Linear_Verificacion.setVisibility(View.VISIBLE);
 
-                    // Obtener los datos
-                    String uid = "" + snapshot.child("uid").getValue();
-                    String nombres = "" + snapshot.child("nombres").getValue();
-                    String correo = "" + snapshot.child("correo").getValue();
-                    String imagenPerfilUrl = "" + snapshot.child("imagen_perfil").getValue(); // Obtener la URL de la imagen
+                    String uid = snapshot.child("uid").getValue(String.class);
+                    String nombres = snapshot.child("nombres").getValue(String.class);
+                    String correo = snapshot.child("correo").getValue(String.class);
+                    String imagenPerfilUrl = snapshot.child("imagen_perfil").getValue(String.class);
 
-                    // Setear los datos en los respectivos textview
                     UidPrincipal.setText(uid);
                     NombresPrincipal.setText(nombres);
                     CorreoPrincipal.setText(correo);
 
-                    // Cargar la imagen de perfil usando Glide
-                    Glide.with(MenuPrincipal.this)
-                            .load(imagenPerfilUrl)
-                            .placeholder(R.drawable.imagen_perfil) // Placeholder image
-                            .into(imagen_perfil);
+                    if (!isFinishing() && !isDestroyed()) { // Ensure activity is still active
+                        Glide.with(MenuPrincipal.this)
+                                .load(imagenPerfilUrl)
+                                .placeholder(R.drawable.imagen_perfil)
+                                .into(imagen_perfil);
+                    }
 
-                    // Habilitar los botones del menú
-                    AgregarNotas.setEnabled(true);
-                    ListarNotas.setEnabled(true);
-                    Importantes.setEnabled(true);
-                    Contactos.setEnabled(true);
-                    AcercaDe.setEnabled(true);
-                    CerrarSesion.setEnabled(true);
+                    enableButtons();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Manejar el error
+                Toast.makeText(MenuPrincipal.this, "Error al cargar datos: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void enableButtons() {
+        AgregarNotas.setEnabled(true);
+        ListarNotas.setEnabled(true);
+        Importantes.setEnabled(true);
+        Contactos.setEnabled(true);
+        AcercaDe.setEnabled(true);
+        CerrarSesion.setEnabled(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -329,16 +271,14 @@ public class MenuPrincipal extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Perfil_usuario){
+        int itemId = item.getItemId();
+        if (itemId == R.id.Perfil_usuario) {
             startActivity(new Intent(MenuPrincipal.this, Perfil_Usuario.class));
+        } else if (itemId == R.id.Configuracion) {
+            Intent intent = new Intent(MenuPrincipal.this, Configuracion.class);
+            intent.putExtra("Uid", UidPrincipal.getText().toString());
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void SalirAplicacion() {
-        firebaseAuth.signOut();
-        startActivity(new Intent(MenuPrincipal.this, MainActivity.class));
-        Toast.makeText(this, "Cerraste Sesión Correctamente", Toast.LENGTH_SHORT).show();
-    }
-
 }

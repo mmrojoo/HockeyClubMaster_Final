@@ -26,6 +26,10 @@
         android:theme="@style/Theme.Agenda_Online"
         tools:targetApi="31">
         <activity
+            android:name=".Configuracion.Configuracion"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat"/>
+        <activity
             android:name=".Contactos.Actualizar_Contacto"
             android:exported="false"
             android:theme="@style/Theme.AppCompat" />
@@ -43,7 +47,8 @@
             android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".ActualizarPass.ActualizarPassUsuario"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".Perfil.Editar_imagen_perfil"
             android:exported="false"
@@ -86,7 +91,8 @@
             android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".Pantalla_De_Carga"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -95,7 +101,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

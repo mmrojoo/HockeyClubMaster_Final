@@ -150,9 +150,17 @@ public class ActualizarPassUsuario extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
-        progressDialog = new ProgressDialog(ActualizarPassUsuario.this);
+        // Inicialización del progressDialog
+        progressDialog = new ProgressDialog(this); // 'this' se refiere a la actividad actual
 
+        progressDialog.setTitle("Actualizando");
+        progressDialog.setMessage("Espere por favor");
+
+        progressDialog.setCanceledOnTouchOutside(false); // Evita que el progressDialog se cancele al tocar fuera
+
+        progressDialog.setCancelable(false); // Evita que el progressDialog se cancele al presionar el botón de retroceso
     }
+
 
     private void LecturaDeDato(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");

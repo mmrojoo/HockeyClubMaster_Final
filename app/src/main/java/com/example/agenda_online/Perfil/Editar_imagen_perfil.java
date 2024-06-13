@@ -162,11 +162,13 @@ public class Editar_imagen_perfil extends AppCompatActivity {
         reference.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String imagen_perfil = ""+snapshot.child("imagen_perfil").getValue();
-                Glide.with(getApplicationContext())
-                        .load(imagen_perfil)
-                        .placeholder(R.drawable.imagen_perfil)
-                        .into(ImagenPerfilActualizar);
+                if (!isFinishing() && !isDestroyed()) {
+                    String imagen_perfil = ""+snapshot.child("imagen_perfil").getValue();
+                    Glide.with(getApplicationContext())
+                            .load(imagen_perfil)
+                            .placeholder(R.drawable.imagen_perfil)
+                            .into(ImagenPerfilActualizar);
+                }
             }
 
             @Override
@@ -309,6 +311,7 @@ public class Editar_imagen_perfil extends AppCompatActivity {
         }
         return orientation;
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

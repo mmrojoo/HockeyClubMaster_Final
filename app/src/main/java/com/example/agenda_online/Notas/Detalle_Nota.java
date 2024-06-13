@@ -41,10 +41,11 @@ public class Detalle_Nota extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_nota);
 
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setTitle("Detalle de convocatoria");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setTitle("Detalle de convocatoria");
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         InicializarVistas();
         RecuperarDatos();
@@ -81,14 +82,16 @@ public class Detalle_Nota extends AppCompatActivity {
     private void RecuperarDatos() {
         Bundle intent = getIntent().getExtras();
 
-        id_nota_R = intent.getString("id_nota");
-        uid_usuario_R = intent.getString("uid_usuario");
-        correo_usuario_R = intent.getString("correo_usuario");
-        fecha_registro_R = intent.getString("fecha_registro");
-        titulo_R = intent.getString("titulo");
-        descripcion_R = intent.getString("descripcion");
-        fecha_R = intent.getString("fecha_nota");
-        estado_R = intent.getString("estado");
+        if (intent != null) {
+            id_nota_R = intent.getString("id_nota");
+            uid_usuario_R = intent.getString("uid_usuario");
+            correo_usuario_R = intent.getString("correo_usuario");
+            fecha_registro_R = intent.getString("fecha_registro");
+            titulo_R = intent.getString("titulo");
+            descripcion_R = intent.getString("descripcion");
+            fecha_R = intent.getString("fecha_nota");
+            estado_R = intent.getString("estado");
+        }
     }
 
     private void SetearDatosRecuperados() {
@@ -104,120 +107,111 @@ public class Detalle_Nota extends AppCompatActivity {
 
     private void Agregar_Notas_Importantes() {
         if (user == null) {
-            //Si el usuario es null
             Toast.makeText(this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
-        } else {
-            //Obtenemos los datos de la nota de la actividad anterior
-            Bundle intent = getIntent().getExtras();
-
-            id_nota_R = intent.getString("id_nota");
-            uid_usuario_R = intent.getString("uid_usuario");
-            correo_usuario_R = intent.getString("correo_usuario");
-            fecha_registro_R = intent.getString("fecha_registro");
-            titulo_R = intent.getString("titulo");
-            descripcion_R = intent.getString("descripcion");
-            fecha_R = intent.getString("fecha_nota");
-            estado_R = intent.getString("estado");
-
-            String identificador_nota_importante = uid_usuario_R + titulo_R;
-
-            HashMap<String, String> Nota_Importante = new HashMap<>();
-            Nota_Importante.put("id_nota", id_nota_R);
-            Nota_Importante.put("uid_usuario", uid_usuario_R);
-            Nota_Importante.put("correo_usuario", correo_usuario_R);
-            Nota_Importante.put("fecha_hora_actual", fecha_registro_R);
-            Nota_Importante.put("titulo", titulo_R);
-            Nota_Importante.put("descripcion", descripcion_R);
-            Nota_Importante.put("fecha_hora", fecha_R);
-            Nota_Importante.put("estado", estado_R);
-            Nota_Importante.put("id_nota_importante", identificador_nota_importante);
-
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
-            reference.child(firebaseAuth.getUid()).child("Mis convocatorias importantes").child(identificador_nota_importante)
-                    .setValue(Nota_Importante)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(Detalle_Nota.this, "Se ha añadido a convocatorias importantes", Toast.LENGTH_SHORT).show();
-                            Boton_Importante.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icono_nota_importante, 0, 0);
-                            Boton_Importante.setText("Importante");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Detalle_Nota.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
+            return;
         }
+
+        String identificador_nota_importante = uid_usuario_R + titulo_R;
+
+        HashMap<String, String> Nota_Importante = new HashMap<>();
+        Nota_Importante.put("id_nota", id_nota_R);
+        Nota_Importante.put("uid_usuario", uid_usuario_R);
+        Nota_Importante.put("correo_usuario", correo_usuario_R);
+        Nota_Importante.put("fecha_hora_actual", fecha_registro_R);
+        Nota_Importante.put("titulo", titulo_R);
+        Nota_Importante.put("descripcion", descripcion_R);
+        Nota_Importante.put("fecha_hora", fecha_R);
+        Nota_Importante.put("estado", estado_R);
+        Nota_Importante.put("id_nota_importante", identificador_nota_importante);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
+        reference.child(firebaseAuth.getUid()).child("Mis convocatorias importantes").child(identificador_nota_importante)
+                .setValue(Nota_Importante)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(Detalle_Nota.this, "Se ha añadido a convocatorias importantes", Toast.LENGTH_SHORT).show();
+                        Boton_Importante.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icono_nota_importante, 0, 0);
+                        Boton_Importante.setText("Importante");
+                        ComprobarNotaImportante = true;
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Detalle_Nota.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void Eliminar_Nota_Impotante() {
         if (user == null) {
-            Toast.makeText(Detalle_Nota.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
-        } else {
-            Bundle intent = getIntent().getExtras();
-            id_nota_R = intent.getString("uid_usuario");
-            titulo_R = intent.getString("titulo");
-
-            String identificador_nota_importante = uid_usuario_R + titulo_R;
-
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
-            reference.child(firebaseAuth.getUid()).child("Mis convocatorias importantes").child(identificador_nota_importante)
-                    .removeValue()
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(Detalle_Nota.this, "La convocatoria ya no es importante", Toast.LENGTH_SHORT).show();
-                            Boton_Importante.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icono_nota_no_importante, 0, 0);
-                            Boton_Importante.setText("No importante");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Detalle_Nota.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            Toast.makeText(this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        String identificador_nota_importante = uid_usuario_R + titulo_R;
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
+        reference.child(firebaseAuth.getUid()).child("Mis convocatorias importantes").child(identificador_nota_importante)
+                .removeValue()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(Detalle_Nota.this, "La convocatoria ya no es importante", Toast.LENGTH_SHORT).show();
+                        Boton_Importante.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icono_nota_no_importante, 0, 0);
+                        Boton_Importante.setText("No importante");
+                        ComprobarNotaImportante = false;
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Detalle_Nota.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void VerificarNotaImportante() {
         if (user == null) {
             Toast.makeText(this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
-        } else {
-            Bundle intent = getIntent().getExtras();
-            id_nota_R = intent.getString("id_nota");
-            uid_usuario_R = intent.getString("uid_usuario");
-            titulo_R = intent.getString("titulo");
-
-            String identificador_nota_importante = uid_usuario_R + titulo_R;
-
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
-            reference.child(firebaseAuth.getUid()).child("Mis convocatorias importantes").child(identificador_nota_importante)
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            ComprobarNotaImportante = snapshot.exists();
-                            if (ComprobarNotaImportante) {
-                                Boton_Importante.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icono_nota_importante, 0, 0);
-                                Boton_Importante.setText("Importante");
-                            } else {
-                                Boton_Importante.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icono_nota_no_importante, 0, 0);
-                                Boton_Importante.setText("No importante");
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(Detalle_Nota.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            return;
         }
+
+        String identificador_nota_importante = uid_usuario_R + titulo_R;
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
+        reference.child(firebaseAuth.getUid()).child("Mis convocatorias importantes").child(identificador_nota_importante)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ComprobarNotaImportante = snapshot.exists();
+                        if (ComprobarNotaImportante) {
+                            Boton_Importante.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icono_nota_importante, 0, 0);
+                            Boton_Importante.setText("Importante");
+                        } else {
+                            Boton_Importante.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.icono_nota_no_importante, 0, 0);
+                            Boton_Importante.setText("No importante");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(Detalle_Nota.this, "Error al verificar nota importante: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+        onBackPressed();
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish(); // Asegura que la actividad se cierre correctamente
+    }
 }
+
+
+
