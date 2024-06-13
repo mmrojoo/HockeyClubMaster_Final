@@ -54,6 +54,7 @@
     <string name="Perfil_usuario">Perfil del usuario</string>
     <string name="Actualizar_pass">Actualizar pass</string>
     <string name="Agregar_contacto">Agregar contacto</string>
+    <string name="Buscar_Contactos">Buscar contactos</string>
 
     <!--ITEM NOTA-->
     <string name="Id_nota_Item">Id Convocatoria</string>
@@ -198,4 +199,17 @@
     <string name="Telefono_C_D"> -- </string>
     <string name="Edad_C_D"> -- </string>
     <string name="Direccion_C_D"> -- </string>
+    <string name="Llamar_C">Llamar</string>
+    <string name="Mensaje_C">Mensaje</string>
+
+    <!--ACTUALIZAR CONTACTO-->
+    <string name="Id_C_A"> -- </string>
+    <string name="Uid_C_A"> -- </string>
+    <string name="Nombres_C_A"> -- </string>
+    <string name="Apellidos_C_A"> -- </string>
+    <string name="Correo_C_A"> -- </string>
+    <string name="Telefono_C_A"> -- </string>
+    <string name="Edad_C_A"> -- </string>
+    <string name="Direccion_C_A"> -- </string>
+    <string name="Btn_Actualizar_C_A">Actualizar</string>
 </resources>

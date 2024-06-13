@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Contactos.Actualizar_Contacto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:src="@drawable/portada_contacto"
+                android:scaleType="centerCrop"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/Imagen_C_A"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="120dp"
+                android:background="#354F60"
+                android:scaleType="centerCrop"
+                android:src="@drawable/imagen_contacto"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/Actualizar_imagen_C_A"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="130dp"
+                android:layout_marginTop="230dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/editar_imagen_perfil"/>
+
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <TextView
+                android:id="@+id/Id_C_A"
+                android:text="@string/Id_C_A"
+                android:fontFamily="@font/worksans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/Uid_C_A"
+                android:text="@string/Uid_C_A"
+                android:fontFamily="@font/worksans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/Nombres_C_A"
+                android:hint="@string/Nombres_C_A"
+                android:layout_marginTop="10dp"
+                android:inputType="textCapWords|textPersonName"
+                android:fontFamily="@font/worksans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/Apellidos_C_A"
+                android:hint="@string/Apellidos_C_A"
+                android:inputType="textCapWords|textPersonName"
+                android:fontFamily="@font/worksans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/Correo_C_A"
+                android:hint="@string/Correo_C_A"
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/worksans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <Button
+                android:id="@+id/Btn_Actualizar_C_A"
+                android:text="@string/Btn_Actualizar_C_A"
+                android:fontFamily="@font/worksans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</RelativeLayout>
